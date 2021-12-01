@@ -9,7 +9,7 @@ exports.exportProject = projectId => {
 
   return imgs
     .map(img => {
-      const { id, originalName, labelData, labeled } = img;
+      const { id, originalName, labelData, labeled, callbackUrl } = img;
       if (!labeled) return null;
 
       const shapes = [];
@@ -80,6 +80,7 @@ exports.exportProject = projectId => {
       return {
         name: path.basename(originalName).replace(/\.[^/.]+$/, '') + '.json',
         originalName: originalName,
+        callbackUrl: callbackUrl,
         contents: JSON.stringify(out, null, 2),
       };
     })

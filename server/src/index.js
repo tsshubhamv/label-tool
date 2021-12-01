@@ -351,14 +351,36 @@ app.get(
   checkLoginMiddleware,
   (req, res) => {
     const { projectId } = req.params;
-    const data = [];
-    exporter.exportProject(projectId).forEach(({ originalName, contents }) => {
-      data.push({
-        key: originalName,
-        contents: JSON.parse(contents),
+    const diffCallbackUrls = {};
+    exporter
+      .exportProject(projectId)
+      .forEach(({ originalName, contents, callbackUrl }) => {
+        diffCallbackUrls[callbackUrl] = diffCallbackUrls[callbackUrl] || [];
+        diffCallbackUrls[callbackUrl].push({
+          key: originalName,
+          contents: JSON.parse(contents),
+        });
       });
-    });
-    res.json(data);
+
+    // const callbackReqPromises = [];
+    for (let url in diffCallbackUrls) {
+      const labelInfo = diffCallbackUrls[url];
+      request.post(
+        url,
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(labelInfo),
+        },
+        function(err, res) {
+          console.log(err);
+          console.log(res);
+        }
+      );
+    }
+    res.json(diffCallbackUrls);
   }
 );
 
