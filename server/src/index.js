@@ -359,7 +359,7 @@ app.get(
           diffCallbackUrls[callbackUrl] = diffCallbackUrls[callbackUrl] || [];
           diffCallbackUrls[callbackUrl].push({
             key: originalName,
-            contents: JSON.parse(contents),
+            labelInfo: JSON.parse(contents),
           });
         }
       });
@@ -374,11 +374,13 @@ app.get(
             Accept: 'application/json',
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(labelInfo),
+          body: {
+            labelInfo: labelInfo,
+          },
         },
-        function(err, res) {
+        function(err, res, data) {
           console.log(err);
-          console.log(res);
+          console.log(data);
         }
       );
     }
