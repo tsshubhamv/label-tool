@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const archiver = require('archiver');
 const request = require('request');
+const cors = require('cors');
 
 const path = require('path');
 const fs = require('fs').promises;
@@ -18,6 +19,8 @@ const UPLOADS_PATH =
   process.env.UPLOADS_PATH || path.join(__dirname, '..', 'uploads');
 
 const app = express();
+
+app.use(cors());
 
 setup(app);
 app.use(bodyParser.urlencoded({ extended: false }));
