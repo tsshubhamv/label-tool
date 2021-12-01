@@ -3,7 +3,7 @@ const projects = require('./queries/projects');
 
 const path = require('path');
 
-exports.exportProject = projectId => {
+exports.exportProject = (projectId, forCallback = false) => {
   const imgs = images.getForProject(projectId);
   const project = projects.get(projectId);
 
@@ -76,6 +76,11 @@ exports.exportProject = projectId => {
         imagePath: originalName,
         imageData: null,
       };
+
+      if (forCallback) {
+        delete out.imageData;
+        delete out.imagePath;
+      }
 
       return {
         name: path.basename(originalName).replace(/\.[^/.]+$/, '') + '.json',
