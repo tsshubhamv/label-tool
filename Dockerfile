@@ -7,6 +7,8 @@ RUN apt-get install -y sqlite3 libsqlite3-dev
 WORKDIR /db
 WORKDIR /uploads
 WORKDIR /app
+RUN mkdir -p /tmp/image-labeling-tool/uploads
+RUN mkdir -p /tmp/image-labeling-tool/db
 COPY . .
 RUN yarn install
 RUN cd client && yarn install

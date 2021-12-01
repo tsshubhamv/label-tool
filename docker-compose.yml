@@ -1,11 +1,11 @@
-version: '3.3'
+version: "3.3"
 services:
   server:
     build: .
-    image: imslavko/image-labeling-tool:latest
+    image: toothsi/image-labeling-tool:latest
     user: ${CURRENT_UID}
     volumes:
-      - "/mnt/vision-nas/image-labeling-tool/uploads:/uploads"
-      - "/mnt/vision-nas/image-labeling-tool/db:/db"
+      - "/tmp/image-labeling-tool/uploads:/uploads"
+      - "/tmp/image-labeling-tool/db:/db"
     ports:
-     - "5000:3000"
+      - "5000:3000"
