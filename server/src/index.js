@@ -98,7 +98,7 @@ app.get('/api/images/:id', (req, res) => {
   res.json(images.get(req.params.id));
 });
 
-app.post('/api/s3-images', async (req, res) => {
+app.post('/api/upload/s3-images', async (req, res) => {
   const { projectId, urlsObj = [] } = req.body;
   if (urlsObj.length) {
     try {
