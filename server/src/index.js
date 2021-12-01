@@ -98,6 +98,31 @@ app.get('/api/images/:id', (req, res) => {
   res.json(images.get(req.params.id));
 });
 
+app.post('/api/s3-images', async (req, res) => {
+  const { projectId, urlsObj = [] } = req.body;
+  if (urlsObj.length) {
+    try {
+      images.addImageUrlFromS3(projectId, urlsObj);
+    } catch (e) {
+      res.status(400);
+      res.json({
+        message: err.message,
+        code: 400,
+      });
+      return;
+    }
+    res.json({ success: true });
+  } else {
+    res.status(400);
+    res.json({
+      message:
+        'Please pass urlsObj to upload. In the form urlsObj=<{url: string, callbackUrl: string}>[]',
+      code: 400,
+    });
+    return;
+  }
+});
+
 app.post('/api/images', checkLoginMiddleware, async (req, res) => {
   const { projectId, urls, localPath } = req.body;
   if (urls) {

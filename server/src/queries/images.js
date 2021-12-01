@@ -48,6 +48,24 @@ values (?, 'stub', ?, 0, '{ }', ?);
     }
   },
 
+  addImageUrlFromS3: (projectId, urlsObj) => {
+    const getName = url => new URL(url, 'https://base.com').pathname;
+    // https://s3.ap-south-1.amazonaws.com/ml-smile-correction-data/before/3yyp1XGkk8pdaZ3uz8M4Ux.png
+    // /ml-smile-correction-data/before/3yyp1XGkk8pdaZ3uz8M4Ux.png
+
+    const stmt = db.prepare(`
+      insert into images(originalName, link, externalLink, labeled, labelData, projectsId, callbackUrl)
+      values (?, 'stub', ?, 0, '{ }', ?, ?);
+      `);
+
+    for (const curObj of urlsObj) {
+      const { url, callbackUrl = null } = curObj;
+      const name = getName(url);
+      const { lastInsertRowid } = stmt.run(name, url, projectId, callbackUrl);
+      Images.updateLink(lastInsertRowid, { projectId, filename: name });
+    }
+  },
+
   addImageStub: (projectId, filename, localPath) => {
     const stmt = db.prepare(`
 insert into images(originalName, localPath, link, labeled, labelData, projectsId)
