@@ -350,6 +350,7 @@ app.get(
   '/api/projects/:projectId/export/callbacks',
   checkLoginMiddleware,
   (req, res) => {
+    const { projectId } = req.params;
     const data = [];
     exporter.exportProject(projectId).forEach(({ name, contents }) => {
       console.log(name, contents);
