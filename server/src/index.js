@@ -355,11 +355,13 @@ app.get(
     exporter
       .exportProject(projectId)
       .forEach(({ originalName, contents, callbackUrl }) => {
-        diffCallbackUrls[callbackUrl] = diffCallbackUrls[callbackUrl] || [];
-        diffCallbackUrls[callbackUrl].push({
-          key: originalName,
-          contents: JSON.parse(contents),
-        });
+        if (callbackUrl) {
+          diffCallbackUrls[callbackUrl] = diffCallbackUrls[callbackUrl] || [];
+          diffCallbackUrls[callbackUrl].push({
+            key: originalName,
+            contents: JSON.parse(contents),
+          });
+        }
       });
 
     // const callbackReqPromises = [];
