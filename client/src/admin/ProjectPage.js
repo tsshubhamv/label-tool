@@ -251,6 +251,9 @@ export default class ProjectPage extends Component {
                   label="Download a zip-file with JSON-encoded labels"
                 />
               </a>
+              <a href={`/api/projects/${projectId}/export/callbacks`}>
+                <Button icon="play" label="Update data via callbackUrls" />
+              </a>
             </div>
             <div id="reference-information" style={{ padding: '2em 0' }}>
               <Header disabled>REFERENCE INFORMATION</Header>

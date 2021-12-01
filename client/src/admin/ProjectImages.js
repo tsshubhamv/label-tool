@@ -40,9 +40,9 @@ export default class ProjectImages extends Component {
   async refetch() {
     const { projectId } = this.props;
     try {
-      const images = await (await fetch(
-        '/api/images/?projectId=' + projectId
-      )).json();
+      const images = await (
+        await fetch('/api/images/?projectId=' + projectId)
+      ).json();
 
       this.setState({
         isLoaded: true,
@@ -148,7 +148,7 @@ export default class ProjectImages extends Component {
           </Table.Header>
           <Table.Body style={{ height: '100%', flex: 1, outline: 0 }}>
             <AutoSizedList
-              rowHeight={55}
+              rowHeight={85}
               rowCount={images.length}
               style={{ overflowY: 'scroll' }}
               rowRenderer={({ index, style, key }) => (
@@ -186,7 +186,14 @@ const Row = ({ image, projectId, style, onLabeled, onDelete }) => (
   <Table.Row style={{ ...style, display: 'flex' }}>
     <Table.Cell style={columnStyles[0]}>{image.id}</Table.Cell>
     <Table.Cell style={columnStyles[1]}>
-      <a href={image.link}>{image.originalName}</a>
+      <a
+        href={image.link}
+        style={{
+          wordBreak: 'break-all',
+        }}
+      >
+        {image.originalName}
+      </a>
     </Table.Cell>
     <Table.Cell style={columnStyles[2]}>
       <Checkbox
