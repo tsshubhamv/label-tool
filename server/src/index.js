@@ -353,7 +353,7 @@ app.get(
     const { projectId } = req.params;
     const diffCallbackUrls = {};
     exporter
-      .exportProject(projectId)
+      .exportProject(projectId, true)
       .forEach(({ originalName, contents, callbackUrl }) => {
         if (callbackUrl) {
           diffCallbackUrls[callbackUrl] = diffCallbackUrls[callbackUrl] || [];
