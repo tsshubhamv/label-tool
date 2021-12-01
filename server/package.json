@@ -21,11 +21,15 @@
     "request": "^2.88.0"
   },
   "scripts": {
-    "start": "yarn run nodemon src/index.js"
+    "start": "yarn run nodemon src/index.js",
+    "serve": "node -r dotenv/config src/index.js"
   },
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged"
     }
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0"
   }
 }
