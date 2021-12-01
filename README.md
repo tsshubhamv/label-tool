@@ -105,10 +105,10 @@ Access the site at `localhost:5000`.
 
 ```bash
 # if it needs to build the docker image,
-CURRENT_UID=$(id -u):$(id -g) docker-compose up -d --build
+API_PORT=5004 CURRENT_UID=$(id -u):$(id -g) docker-compose up -d --build
 
 # if it only needs to run,
-CURRENT_UID=$(id -u):$(id -g) docker-compose up -d
+API_PORT=5004 CURRENT_UID=$(id -u):$(id -g) docker-compose up -d
 ```
 
 ## Project Support and Development
