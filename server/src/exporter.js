@@ -17,7 +17,7 @@ exports.exportProject = projectId => {
 
       project.form.formParts.forEach(({ id, type, name }) => {
         if (labelData.labels == null || labelData.labels == undefined) {
-          console.log("No labels found for: " + id);
+          console.log('No labels found for: ' + id);
           return;
         }
         const things = labelData.labels[id];
@@ -28,7 +28,12 @@ exports.exportProject = projectId => {
             }
 
             const [[x1, y1], [x2, y2]] = points;
-            return [[x1, y1], [x1, y2], [x2, y2], [x2, y1]];
+            return [
+              [x1, y1],
+              [x1, y2],
+              [x2, y2],
+              [x2, y1],
+            ];
           }
           function sanitize([x, y]) {
             x = Math.floor(Math.max(x, 0));
@@ -74,6 +79,7 @@ exports.exportProject = projectId => {
 
       return {
         name: path.basename(originalName).replace(/\.[^/.]+$/, '') + '.json',
+        originalName: originalName,
         contents: JSON.stringify(out, null, 2),
       };
     })

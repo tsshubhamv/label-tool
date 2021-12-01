@@ -352,14 +352,13 @@ app.get(
   (req, res) => {
     const { projectId } = req.params;
     const data = [];
-    exporter.exportProject(projectId).forEach(({ name, contents }) => {
-      console.log(name, contents);
+    exporter.exportProject(projectId).forEach(({ originalName, contents }) => {
       data.push({
-        name,
-        contents,
+        key: originalName,
+        contents: JSON.parse(contents),
       });
     });
-    res.send(data);
+    res.json(data);
   }
 );
 
