@@ -374,9 +374,9 @@ app.get(
             Accept: 'application/json',
             'Content-Type': 'application/json',
           },
-          body: {
+          body: JSON.stringify({
             labelInfo: labelInfo,
-          },
+          }),
         },
         function(err, res, data) {
           console.log(err);
