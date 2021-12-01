@@ -346,12 +346,21 @@ app.get('/api/projects/:projectId/export', checkLoginMiddleware, (req, res) => {
   archive.finalize();
 });
 
-app.get('/api/projects/export/callbacks', checkLoginMiddleware, (req, res) => {
-  exporter.exportProject(projectId).forEach(({ name, contents }) => {
-    console.log(name, contents);
-  });
-  res.send(200);
-});
+app.get(
+  '/api/projects/:projectId/export/callbacks',
+  checkLoginMiddleware,
+  (req, res) => {
+    const data = [];
+    exporter.exportProject(projectId).forEach(({ name, contents }) => {
+      console.log(name, contents);
+      data.push({
+        name,
+        contents,
+      });
+    });
+    res.send(data);
+  }
+);
 
 app.get('/api/auth', authHandler);
 
