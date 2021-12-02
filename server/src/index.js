@@ -351,7 +351,7 @@ app.get('/api/projects/:projectId/export', checkLoginMiddleware, (req, res) => {
 
 app.get(
   '/api/projects/:projectId/export/callbacks',
-  checkLoginMiddleware,
+  // checkLoginMiddleware,
   (req, res) => {
     const { projectId } = req.params;
     const diffCallbackUrls = {};
