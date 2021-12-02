@@ -358,6 +358,7 @@ app.get(
     exporter
       .exportProject(projectId, true)
       .forEach(({ originalName, contents, callbackUrl }) => {
+        console.log(originalName, contents, callbackUrl);
         if (callbackUrl) {
           diffCallbackUrls[callbackUrl] = diffCallbackUrls[callbackUrl] || [];
           diffCallbackUrls[callbackUrl].push({
