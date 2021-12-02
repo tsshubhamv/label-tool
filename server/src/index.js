@@ -370,6 +370,7 @@ app.get(
     // const callbackReqPromises = [];
     for (let url in diffCallbackUrls) {
       const labelInfo = diffCallbackUrls[url];
+      console.log(url);
       request.post(
         url,
         {
