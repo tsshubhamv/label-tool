@@ -109,7 +109,7 @@ app.post('/api/upload/s3-images', async (req, res) => {
     } catch (e) {
       res.status(400);
       res.json({
-        message: err.message,
+        message: e.message,
         code: 400,
       });
       return;
