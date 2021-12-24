@@ -225,6 +225,7 @@ app.patch('/api/images/:imageId', (req, res) => {
   const { labelData, labeled } = req.body;
   if (labelData) {
     images.updateLabel(imageId, labelData);
+    exportSingleImageData();
   }
   if (labeled !== undefined) {
     images.updateLabeled(imageId, labeled);
@@ -233,6 +234,11 @@ app.patch('/api/images/:imageId', (req, res) => {
     success: true,
   });
 });
+
+const exportSingleImageData = async imageId => {
+  const imageData = images.get(imageId);
+  console.log(imageData);
+};
 
 const uploads = multer({
   storage: multer.diskStorage({
