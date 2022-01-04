@@ -225,7 +225,7 @@ app.patch('/api/images/:imageId', (req, res) => {
   const { labelData, labeled } = req.body;
   if (labelData) {
     images.updateLabel(imageId, labelData);
-    exportSingleImageData();
+    // exportSingleImageData(imageId);
   }
   if (labeled !== undefined) {
     images.updateLabeled(imageId, labeled);
