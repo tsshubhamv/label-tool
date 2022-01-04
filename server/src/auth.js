@@ -14,7 +14,7 @@ exports.setup = app => {
       resave: false,
       saveUninitialized: false,
       cookie: {
-        expires: 600000,
+        expires: 360000000,
       },
     })
   );
