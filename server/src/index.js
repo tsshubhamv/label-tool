@@ -397,22 +397,37 @@ app.get(
     for (let url in diffCallbackUrls) {
       const labelInfo = diffCallbackUrls[url];
       console.log(url);
-      request.post(
-        url,
-        {
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            labelInfo: labelInfo,
-          }),
-        },
-        function(err, res, data) {
-          console.log(err);
-          console.log(data);
+      const perChunk = 40;
+      const chunks = labelInfo.reduce((resultArray, item, index) => {
+        const chunkIndex = Math.floor(index / perChunk);
+
+        if (!resultArray[chunkIndex]) {
+          resultArray[chunkIndex] = []; // start a new chunk
         }
-      );
+
+        resultArray[chunkIndex].push(item);
+
+        return resultArray;
+      }, []);
+      console.log(chunks.length);
+      chunks.forEach(curChunk => {
+        request.post(
+          url,
+          {
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              labelInfo: curChunk,
+            }),
+          },
+          function(err, res, data) {
+            console.log(err);
+            console.log(data);
+          }
+        );
+      });
     }
     res.json(diffCallbackUrls);
   }
