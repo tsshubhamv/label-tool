@@ -208,10 +208,10 @@ where id in (?) and projectsId = ?
 select * 
 from images
 where projectsId = ? and 
-id in (?)
+id in (${imageIds.map(cur => '?').join(',')})
       `
       )
-      .all(projectId, imageIds.join(','));
+      .all(projectId, ...imageIds);
     console.log(images);
     return images;
   },
