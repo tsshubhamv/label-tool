@@ -199,7 +199,7 @@ app.post('/api/images/change-project', checkLoginMiddleware, (req, res) => {
 
 app.post('/api/images/get-all-by-ids', checkLoginMiddleware, (req, res) => {
   const { imageIds, projectId } = req.body;
-  imageRes = images.getAllByIds(imageIds, projectId);
+  const imageRes = images.getAllByIds(imageIds, projectId);
   res.json({ success: true, images: imageRes });
 });
 
