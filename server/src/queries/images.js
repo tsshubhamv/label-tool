@@ -196,7 +196,7 @@ order by lastEdited desc
     db.prepare(
       `
 delete from images
-where id in (?) and projectsId = ?
+where id in (${imageIds.map(cur => '?').join(',')}) and projectsId = ?
         `
     ).run(imageIds, projectId);
   },
@@ -216,17 +216,26 @@ id in (${imageIds.map(cur => '?').join(',')})
     return images;
   },
 
-  changeProjectByIds: (imageIds, prevProjectId, newProjectId) => {
-    const images = db
-      .prepare(
-        `
-update images
-set projectsId=?
-where projectsId=? and id in ?
-      `
-      )
-      .run(newProjectId, prevProjectId, imageIds);
-    return images;
+  changeProjectByIds: (urlsObj, projectId) => {
+    const getName = url => new URL(url, 'https://base.com').pathname;
+    // https://s3.ap-south-1.amazonaws.com/ml-smile-correction-data/before/3yyp1XGkk8pdaZ3uz8M4Ux.png
+    // /ml-smile-correction-data/before/3yyp1XGkk8pdaZ3uz8M4Ux.png
+
+    const stmt = db.prepare(`
+        update images
+        set projectsId=?,
+            originalName=?,
+            externalLink=?,
+            callbackUrl=?
+        where id=?
+        ;
+        `);
+
+    for (const curObj of urlsObj) {
+      const { url, callbackUrl = null, id } = curObj;
+      const name = getName(url);
+      stmt.run(projectId, name, url, callbackUrl, id);
+    }
   },
 };
 

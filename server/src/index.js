@@ -187,13 +187,9 @@ app.post('/api/images/delete-by-ids', (req, res) => {
   res.json({ success: true });
 });
 
-app.post('/api/images/change-project', (req, res) => {
-  const { imageIds, prevProjectId, newProjectId } = req.body;
-  const imageRes = images.changeProjectByIds(
-    imageIds,
-    prevProjectId,
-    newProjectId
-  );
+app.post('/api/images/change-project-and-url', (req, res) => {
+  const { urlsObj, newProjectId } = req.body;
+  const imageRes = images.changeProjectByIds(urlsObj, newProjectId);
   res.json({ success: true, images: imageRes });
 });
 
@@ -385,12 +381,13 @@ app.get(
     const diffCallbackUrls = {};
     exporter
       .exportProject(projectId, true)
-      .forEach(({ originalName, contents, callbackUrl }) => {
+      .forEach(({ originalName, contents, callbackUrl, image_id }) => {
         console.log(originalName, contents, callbackUrl);
         if (callbackUrl) {
           diffCallbackUrls[callbackUrl] = diffCallbackUrls[callbackUrl] || [];
           diffCallbackUrls[callbackUrl].push({
             key: originalName,
+            image_id,
             labelInfo: JSON.parse(contents),
           });
         }
