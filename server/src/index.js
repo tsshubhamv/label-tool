@@ -181,13 +181,13 @@ app.delete('/api/images/:id', checkLoginMiddleware, (req, res) => {
   res.json({ success: true });
 });
 
-app.post('/api/images/delete-by-ids', checkLoginMiddleware, (req, res) => {
+app.post('/api/images/delete-by-ids', (req, res) => {
   const { imageIds, projectId } = req.body;
   images.deleteByIds(imageIds, projectId);
   res.json({ success: true });
 });
 
-app.post('/api/images/change-project', checkLoginMiddleware, (req, res) => {
+app.post('/api/images/change-project', (req, res) => {
   const { imageIds, prevProjectId, newProjectId } = req.body;
   const imageRes = images.changeProjectByIds(
     imageIds,
@@ -197,7 +197,7 @@ app.post('/api/images/change-project', checkLoginMiddleware, (req, res) => {
   res.json({ success: true, images: imageRes });
 });
 
-app.post('/api/images/get-all-by-ids', checkLoginMiddleware, (req, res) => {
+app.post('/api/images/get-all-by-ids', (req, res) => {
   const { imageIds, projectId } = req.body;
   const imageRes = images.getAllByIds(imageIds, projectId);
   res.json({ success: true, images: imageRes });
