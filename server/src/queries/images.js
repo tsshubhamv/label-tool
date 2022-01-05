@@ -211,7 +211,8 @@ where projectsId = ? and
 id in (?)
       `
       )
-      .get(projectId, imageIds.join(','));
+      .all(projectId, imageIds.join(','));
+    console.log(images);
     return images;
   },
 
