@@ -208,10 +208,10 @@ where id in (?) and projectsId = ?
 select * 
 from images
 where projectsId = ? and 
-id in ?
+id in (?)
       `
       )
-      .get(projectId, imageIds);
+      .get(projectId, imageIds.join(','));
     return images;
   },
 
