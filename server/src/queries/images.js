@@ -197,8 +197,6 @@ order by lastEdited desc
     delete from images
     where id in (${imageIds.map(cur => '?').join(',')}) and projectsId = ?
             `;
-    console.log(query);
-    return;
     db.prepare(query).run(imageIds, projectId);
   },
 
@@ -232,7 +230,6 @@ id in (${imageIds.map(cur => '?').join(',')})
         ;
         `);
     console.log(urlsObj, projectId);
-    return;
     for (const curObj of urlsObj) {
       const { url, callbackUrl = null, id } = curObj;
       const name = getName(url);
