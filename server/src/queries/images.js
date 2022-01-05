@@ -91,7 +91,7 @@ update images
 
   allocateUnlabeledImage: (projectId, imageId) => {
     // after this period of time we consider the image to be up for labeling again
-    const lastEditedTimeout = 5 * 60 * 1000;
+    const lastEditedTimeout = 15 * 60 * 1000;
 
     let result = null;
     db.transaction(() => {
@@ -168,6 +168,64 @@ where projectsId = ? and originalName = ?;
     }
 
     return { ...image, labelData: JSON.parse(image.labelData) };
+  },
+
+  getLabeledByProject: projectId => {
+    const image = db
+      .prepare(
+        `
+select *
+from images
+where projectsId = ? and labeled = 1
+order by lastEdited desc
+        `
+      )
+      .get(projectId);
+
+    if (!image) {
+      return {
+        isSuccess: true,
+        image: null,
+      };
+    }
+
+    return { ...image, labelData: JSON.parse(image.labelData) };
+  },
+
+  deleteByIds: (imageIds, projectId) => {
+    db.prepare(
+      `
+delete from images
+where id in (?) and projectsId = ?
+        `
+    ).run(imageIds, projectId);
+  },
+
+  getAllByIds: (imageIds, projectId) => {
+    const images = db
+      .prepare(
+        `
+select * 
+from images
+where projectsId = ? and 
+id in ?
+      `
+      )
+      .get(projectId, imageIds);
+    return images;
+  },
+
+  changeProjectByIds: (imageIds, prevProjectId, newProjectId) => {
+    const images = db
+      .prepare(
+        `
+update images
+set projectsId=?
+where projectsId=? and id in ?
+      `
+      )
+      .run(newProjectId, prevProjectId, imageIds);
+    return images;
   },
 };
 

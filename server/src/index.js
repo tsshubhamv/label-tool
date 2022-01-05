@@ -181,6 +181,28 @@ app.delete('/api/images/:id', checkLoginMiddleware, (req, res) => {
   res.json({ success: true });
 });
 
+app.post('/api/images/delete-by-ids', checkLoginMiddleware, (req, res) => {
+  const { imageIds, projectId } = req.body;
+  images.deleteByIds(imageIds, projectId);
+  res.json({ success: true });
+});
+
+app.post('/api/images/change-project', checkLoginMiddleware, (req, res) => {
+  const { imageIds, prevProjectId, newProjectId } = req.body;
+  const imageRes = images.changeProjectByIds(
+    imageIds,
+    prevProjectId,
+    newProjectId
+  );
+  res.json({ success: true, images: imageRes });
+});
+
+app.post('/api/images/get-all-by-ids', checkLoginMiddleware, (req, res) => {
+  const { imageIds, projectId } = req.body;
+  imageRes = images.getAllByIds(imageIds, projectId);
+  res.json({ success: true, images: imageRes });
+});
+
 app.get('/api/getLabelingInfo', (req, res) => {
   let { projectId, imageId } = req.query;
   if (!projectId) {
