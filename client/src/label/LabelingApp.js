@@ -228,11 +228,15 @@ class LabelingApp extends Component {
       unfinishedFigure,
       height,
       width,
+      imageData,
       models,
       image,
       showCustomOptions,
       makePrediction,
     } = this.props;
+
+    console.log(width, height, imageData);
+
     const {
       selected,
       selectedFigureId,

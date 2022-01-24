@@ -52,7 +52,7 @@ export default class Sidebar extends PureComponent {
         height: image.width,
         width: image.height,
       };
-      await this.fetch('/api/images/' + image.id, {
+      await fetch('/api/images/' + image.id, {
         method: 'PATCH',
         headers: {
           Accept: 'application/json',
