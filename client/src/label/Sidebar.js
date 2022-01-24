@@ -34,6 +34,8 @@ export default class Sidebar extends PureComponent {
       models,
       image,
       showCustomOptions,
+      imageWidth,
+      imageHeight,
       makePrediction,
     } = this.props;
 
@@ -49,8 +51,8 @@ export default class Sidebar extends PureComponent {
     const onCustomButtonsClick = async (value, type) => {
       const labelData = {
         labels: { '2rtztwc33': [value], afdmj2rxn: [type], __temp: [] },
-        height: image.width,
-        width: image.height,
+        width: imageWidth,
+        height: imageHeight,
       };
       await fetch('/api/images/' + image.id, {
         method: 'PATCH',

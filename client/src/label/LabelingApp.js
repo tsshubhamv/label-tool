@@ -235,8 +235,6 @@ class LabelingApp extends Component {
       makePrediction,
     } = this.props;
 
-    console.log(width, height, imageData);
-
     const {
       selected,
       selectedFigureId,
@@ -396,6 +394,8 @@ class LabelingApp extends Component {
             <Sidebar
               labels={labels}
               image={image}
+              imageWidth={width}
+              imageHeight={height}
               showCustomOptions={showCustomOptions}
               {...sidebarProps}
               {...forwardedProps}
