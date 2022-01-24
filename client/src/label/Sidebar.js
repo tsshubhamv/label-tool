@@ -32,6 +32,8 @@ export default class Sidebar extends PureComponent {
       labelData,
       onFormChange,
       models,
+      image,
+      showCustomOptions,
       makePrediction,
     } = this.props;
 
@@ -43,6 +45,23 @@ export default class Sidebar extends PureComponent {
         onClick={openHotkeys}
       />
     ) : null;
+
+    const onCustomButtonsClick = async (value, type) => {
+      const labelData = {
+        labels: { '2rtztwc33': [value], afdmj2rxn: [type], __temp: [] },
+        height: image.width,
+        width: image.height,
+      };
+      await this.fetch('/api/images/' + image.id, {
+        method: 'PATCH',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ labelData }),
+      });
+      document.getElementById('submit-move-to-next').click();
+    };
 
     const getSelectHandler = ({ type, id }) =>
       type === 'bbox' || type === 'polygon' ? () => onSelect(id) : null;
@@ -80,13 +99,26 @@ export default class Sidebar extends PureComponent {
           )}
           <Hotkeys keyName="esc" onKeyDown={() => onSelect(null)} />
         </List>
+        {showCustomOptions ? (
+          <div style={{ flex: '0 0 auto', display: 'flex' }}>
+            <Button onClick={() => onCustomButtonsClick(7, 'PROPER')}>7</Button>
+            <Button onClick={() => onCustomButtonsClick(8, 'PROPER')}>8</Button>
+            <Button onClick={() => onCustomButtonsClick(9, 'PROPER')}>9</Button>
+            <Button onClick={() => onCustomButtonsClick(10, 'PROPER')}>
+              10
+            </Button>
+            <Button onClick={() => onCustomButtonsClick(0, 'REJECT')}>
+              Reject
+            </Button>
+          </div>
+        ) : null}
         <div style={{ flex: '0 0 auto', display: 'flex' }}>
           <Button onClick={onBack}>Back</Button>
           <span style={{ flex: 1 }} />
           <Button secondary onClick={onSkip}>
             Skip
           </Button>
-          <Button primary onClick={onSubmit}>
+          <Button primary onClick={onSubmit} id="submit-move-to-next">
             Submit
           </Button>
         </div>

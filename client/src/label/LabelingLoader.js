@@ -140,7 +140,9 @@ export default class LabelingLoader extends Component {
           labelData={image.labelData.labels || {}}
           imageUrl={image.link}
           fetch={this.fetch.bind(this)}
+          image={image}
           demo={project.id === 'demo'}
+          showCustomOptions={project.id == 8}
           {...props}
         />
       </DocumentMeta>

@@ -229,6 +229,8 @@ class LabelingApp extends Component {
       height,
       width,
       models,
+      image,
+      showCustomOptions,
       makePrediction,
     } = this.props;
     const {
@@ -389,6 +391,8 @@ class LabelingApp extends Component {
           <Hotkeys keyName="ctrl+z" onKeyDown={popState}>
             <Sidebar
               labels={labels}
+              image={image}
+              showCustomOptions={showCustomOptions}
               {...sidebarProps}
               {...forwardedProps}
               style={{ flex: 1, maxWidth: 300 }}
