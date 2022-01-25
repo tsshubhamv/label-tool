@@ -97,6 +97,12 @@ app.get('/api/images', (req, res) => {
   res.json(images.getForProject(req.query.projectId));
 });
 
+app.get('/api/images/get-all-unlabeled', (req, res) => {
+  const { limit = 50, projectId } = req.query;
+  const imageRes = images.getUnlabeledByProject(projectId, limit);
+  res.json({ success: true, images: imageRes });
+});
+
 app.get('/api/images/:id', (req, res) => {
   res.json(images.get(req.params.id));
 });
@@ -196,12 +202,6 @@ app.post('/api/images/change-project-and-url', (req, res) => {
 app.post('/api/images/get-all-by-ids', (req, res) => {
   const { imageIds, projectId } = req.body;
   const imageRes = images.getAllByIds(imageIds, projectId);
-  res.json({ success: true, images: imageRes });
-});
-
-app.get('/api/images/get-unlabeled', (req, res) => {
-  const { limit = 50, projectId } = req.query;
-  const imageRes = images.getUnlabeledByProject(projectId, limit);
   res.json({ success: true, images: imageRes });
 });
 
