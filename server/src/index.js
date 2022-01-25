@@ -199,6 +199,12 @@ app.post('/api/images/get-all-by-ids', (req, res) => {
   res.json({ success: true, images: imageRes });
 });
 
+app.get('/api/images/get-unlabeled', (req, res) => {
+  const { limit = 50, projectId } = req.query;
+  const imageRes = images.getUnlabeledByProject(projectId, limit);
+  res.json({ success: true, images: imageRes });
+});
+
 app.get('/api/getLabelingInfo', (req, res) => {
   let { projectId, imageId } = req.query;
   if (!projectId) {

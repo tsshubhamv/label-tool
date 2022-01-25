@@ -192,6 +192,25 @@ order by lastEdited desc
     return { ...image, labelData: JSON.parse(image.labelData) };
   },
 
+  getUnlabeledByProject: (projectId, limit) => {
+    const images = db
+      .prepare(
+        `
+select id, externalLink
+from images
+where projectsId = ? and labeled = 0
+order by id desc
+limit ?
+        `
+      )
+      .all(projectId, limit);
+
+    if (!images || !images.length) {
+      return [];
+    }
+    return images;
+  },
+
   deleteByIds: (imageIds, projectId) => {
     const query = `
     delete from images
