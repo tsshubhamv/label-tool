@@ -199,6 +199,16 @@ app.post('/api/images/change-project-and-url', (req, res) => {
   res.json({ success: true, images: imageRes });
 });
 
+app.post('/api/images/change-only-project', (req, res) => {
+  const { imageIds, oldProjectId, newProjectId } = req.body;
+  const imageRes = images.moveToNewProject(
+    imageIds,
+    newProjectId,
+    oldProjectId
+  );
+  res.json({ success: true, data: imageRes });
+});
+
 app.post('/api/images/get-all-by-ids', (req, res) => {
   const { imageIds, projectId } = req.body;
   const imageRes = images.getAllByIds(imageIds, projectId);

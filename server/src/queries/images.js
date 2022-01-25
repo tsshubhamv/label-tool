@@ -211,6 +211,16 @@ limit ?
     return images;
   },
 
+  moveToNewProject: (imageIds, newProjectId, oldProjectId) => {
+    const query = `
+    update images
+    set projectsId=?
+    where id in (${imageIds.map(cur => '?').join(',')}) and projectsId = ?
+    `;
+    db.prepare(query).run(newProjectId, imageIds, oldProjectId);
+    return 'Done!';
+  },
+
   deleteByIds: (imageIds, projectId) => {
     const query = `
     delete from images
