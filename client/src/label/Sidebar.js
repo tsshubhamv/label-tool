@@ -102,7 +102,8 @@ export default class Sidebar extends PureComponent {
           <Hotkeys keyName="esc" onKeyDown={() => onSelect(null)} />
         </List>
         {showCustomOptions ? (
-          <div style={{ flex: '0 0 auto', display: 'flex' }}>
+          <div style={{ flex: '0 0 auto', display: 'flex', flexWrap: 'wrap' }}>
+            <Button onClick={() => onCustomButtonsClick(6, 'PROPER')}>6</Button>
             <Button onClick={() => onCustomButtonsClick(7, 'PROPER')}>7</Button>
             <Button onClick={() => onCustomButtonsClick(8, 'PROPER')}>8</Button>
             <Button onClick={() => onCustomButtonsClick(9, 'PROPER')}>9</Button>
