@@ -211,8 +211,8 @@ app.post('/api/images/change-only-project', (req, res) => {
 
 app.post('/api/images/proper-to-label', (req, res) => {
   const { projectId } = req.body;
-  const { images } = images.getLabeledByProject(projectId);
-  return images;
+  const { images: allLabeledImages } = images.getLabeledByProject(projectId);
+  return allLabeledImages;
 });
 
 app.post('/api/images/get-all-by-ids', (req, res) => {
