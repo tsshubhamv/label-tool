@@ -210,22 +210,69 @@ app.post('/api/images/change-only-project', (req, res) => {
 });
 
 app.post('/api/images/proper-to-label', (req, res) => {
-  const { projectId, pageNo = 1, limit = 500, minQuality = 8 } = req.body;
+  const {
+    projectId,
+    pageNo = 1,
+    limit = 500,
+    minQuality = 8,
+    labelProjectId,
+    rejectProjectId,
+  } = req.body;
   const { images: allLabeledImages } = images.getLabeledByProject(
     projectId,
     pageNo,
     limit
   );
   const properHQImages = [];
+  const lowQualityOrRejectImages = [];
   allLabeledImages.forEach(cur => {
     if (
       cur.labelData.labels['2rtztwc33'][0] >= minQuality &&
       cur.labelData.labels['afdmj2rxn'][0] == 'PROPER'
     ) {
       properHQImages.push(cur);
+    } else {
+      lowQualityOrRejectImages.push(cur);
     }
   });
-  res.json({ success: true, data: properHQImages });
+  if (!labelProjectId || !rejectProjectId) {
+    return res.json({
+      success: true,
+      data: {
+        proper: properHQImages,
+        lowOrReject: lowQualityOrRejectImages,
+      },
+      count: {
+        proper: properHQImages.length,
+        lowOrReject: lowQualityOrRejectImages.length,
+      },
+    });
+  }
+  const imageResProper = images.moveToNewProject(
+    properHQImages.map(cur => cur.id),
+    labelProjectId,
+    projectId
+  );
+  const imageResReject = images.moveToNewProject(
+    lowQualityOrRejectImages.map(cur => cur.id),
+    rejectProjectId,
+    projectId
+  );
+  res.json({
+    success: true,
+    data: {
+      proper: properHQImages,
+      lowOrReject: lowQualityOrRejectImages,
+    },
+    count: {
+      proper: properHQImages.length,
+      lowOrReject: lowQualityOrRejectImages.length,
+    },
+    moved: {
+      proper: imageResProper,
+      lowOrReject: imageResReject,
+    },
+  });
 });
 
 app.post('/api/images/get-all-by-ids', (req, res) => {
