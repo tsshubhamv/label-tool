@@ -170,7 +170,7 @@ where projectsId = ? and originalName = ?;
     return { ...image, labelData: JSON.parse(image.labelData) };
   },
 
-  getLabeledByProject: projectId => {
+  getLabeledByProject: (projectId, pageNo = 1, limit) => {
     let images = db
       .prepare(
         `
@@ -178,9 +178,10 @@ select *
 from images
 where projectsId = ? and labeled = 1
 order by lastEdited desc
+limit ?, offset ?
         `
       )
-      .all(projectId);
+      .all(projectId, limit, Math.max(pageNo - 1, 0) * limit);
 
     if (!images || !images.length) {
       return {

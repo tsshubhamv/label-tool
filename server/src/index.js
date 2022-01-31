@@ -210,8 +210,12 @@ app.post('/api/images/change-only-project', (req, res) => {
 });
 
 app.post('/api/images/proper-to-label', (req, res) => {
-  const { projectId } = req.body;
-  const { images: allLabeledImages } = images.getLabeledByProject(projectId);
+  const { projectId, pageNo = 1, limit = 500 } = req.body;
+  const { images: allLabeledImages } = images.getLabeledByProject(
+    projectId,
+    pageNo,
+    limit
+  );
   return allLabeledImages;
 });
 
