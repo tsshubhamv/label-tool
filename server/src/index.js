@@ -238,13 +238,13 @@ app.post('/api/images/proper-to-label', (req, res) => {
   if (!labelProjectId || !rejectProjectId) {
     return res.json({
       success: true,
-      data: {
-        proper: properHQImages,
-        lowOrReject: lowQualityOrRejectImages,
-      },
       count: {
         proper: properHQImages.length,
         lowOrReject: lowQualityOrRejectImages.length,
+      },
+      data: {
+        proper: properHQImages,
+        lowOrReject: lowQualityOrRejectImages,
       },
     });
   }
@@ -260,10 +260,6 @@ app.post('/api/images/proper-to-label', (req, res) => {
   );
   res.json({
     success: true,
-    data: {
-      proper: properHQImages,
-      lowOrReject: lowQualityOrRejectImages,
-    },
     count: {
       proper: properHQImages.length,
       lowOrReject: lowQualityOrRejectImages.length,
@@ -271,6 +267,10 @@ app.post('/api/images/proper-to-label', (req, res) => {
     moved: {
       proper: imageResProper,
       lowOrReject: imageResReject,
+    },
+    data: {
+      proper: properHQImages,
+      lowOrReject: lowQualityOrRejectImages,
     },
   });
 });
