@@ -178,7 +178,7 @@ select *
 from images
 where projectsId = ? and labeled = 1
 order by lastEdited desc
-limit ?, offset ?
+limit ? offset ?
         `
       )
       .all(projectId, limit, Math.max(pageNo - 1, 0) * limit);
