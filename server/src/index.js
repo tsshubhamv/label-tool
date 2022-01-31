@@ -216,7 +216,16 @@ app.post('/api/images/proper-to-label', (req, res) => {
     pageNo,
     limit
   );
-  return allLabeledImages;
+  const properHQImages = [];
+  allLabeledImages.forEach(cur => {
+    if (
+      cur.labelData.labels['2rtztwc33'][0] > 8 &&
+      cur.labelData.labels['afdmj2rxn'][0] == 'PROPER'
+    ) {
+      properHQImages.push(cur);
+    }
+  });
+  res.json({ success: true, data: allLabeledImages });
 });
 
 app.post('/api/images/get-all-by-ids', (req, res) => {
