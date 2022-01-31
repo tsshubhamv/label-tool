@@ -210,7 +210,7 @@ app.post('/api/images/change-only-project', (req, res) => {
 });
 
 app.post('/api/images/proper-to-label', (req, res) => {
-  const { projectId, pageNo = 1, limit = 500 } = req.body;
+  const { projectId, pageNo = 1, limit = 500, minQuality = 8 } = req.body;
   const { images: allLabeledImages } = images.getLabeledByProject(
     projectId,
     pageNo,
@@ -219,7 +219,7 @@ app.post('/api/images/proper-to-label', (req, res) => {
   const properHQImages = [];
   allLabeledImages.forEach(cur => {
     if (
-      cur.labelData.labels['2rtztwc33'][0] >= 8 &&
+      cur.labelData.labels['2rtztwc33'][0] >= minQuality &&
       cur.labelData.labels['afdmj2rxn'][0] == 'PROPER'
     ) {
       properHQImages.push(cur);
