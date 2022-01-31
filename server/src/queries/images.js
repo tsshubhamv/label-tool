@@ -171,7 +171,7 @@ where projectsId = ? and originalName = ?;
   },
 
   getLabeledByProject: projectId => {
-    const image = db
+    let images = db
       .prepare(
         `
 select *
@@ -180,16 +180,31 @@ where projectsId = ? and labeled = 1
 order by lastEdited desc
         `
       )
-      .get(projectId);
+      .all(projectId);
 
-    if (!image) {
+    if (!images || !images.length) {
       return {
         isSuccess: true,
-        image: null,
+        images: [],
       };
     }
 
-    return { ...image, labelData: JSON.parse(image.labelData) };
+    const finalImages = [];
+    images.forEach(cur => {
+      try {
+        finalImages.push({
+          ...cur,
+          labelData: JSON.parse(cur.labelData),
+        });
+      } catch (e) {
+        console.log(e, cur);
+      }
+    });
+
+    return {
+      isSuccess: true,
+      images: finalImages,
+    };
   },
 
   getUnlabeledByProject: (projectId, limit) => {
