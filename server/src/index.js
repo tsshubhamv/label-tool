@@ -225,7 +225,7 @@ app.post('/api/images/proper-to-label', (req, res) => {
       properHQImages.push(cur);
     }
   });
-  res.json({ success: true, data: allLabeledImages });
+  res.json({ success: true, data: properHQImages });
 });
 
 app.post('/api/images/get-all-by-ids', (req, res) => {
