@@ -183,6 +183,8 @@ limit ? offset ?
       )
       .all(projectId, limit, Math.max(pageNo - 1, 0) * limit);
 
+    console.log(images);
+
     if (!images || !images.length) {
       return {
         isSuccess: true,
@@ -201,6 +203,8 @@ limit ? offset ?
         console.log(e, cur);
       }
     });
+
+    console.log(finalImages);
 
     return {
       isSuccess: true,
