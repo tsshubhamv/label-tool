@@ -251,7 +251,8 @@ app.post('/api/images/proper-to-label', (req, res) => {
   const imageResProper = images.moveToNewProject(
     properHQImages.map(cur => cur.id),
     labelProjectId,
-    projectId
+    projectId,
+    true
   );
   const imageResReject = images.moveToNewProject(
     lowQualityOrRejectImages.map(cur => cur.id),

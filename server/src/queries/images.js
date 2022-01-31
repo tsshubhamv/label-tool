@@ -231,10 +231,16 @@ limit ?
     return images;
   },
 
-  moveToNewProject: (imageIds, newProjectId, oldProjectId) => {
+  moveToNewProject: (
+    imageIds,
+    newProjectId,
+    oldProjectId,
+    markAllAsUnlabelled = false
+  ) => {
     const query = `
     update images
     set projectsId=?
+    ${markAllAsUnlabelled ? ', labeled=0, labelData="{ }"' : ''}
     where id in (${imageIds.map(cur => '?').join(',')}) and projectsId = ?
     `;
     db.prepare(query).run(newProjectId, imageIds, oldProjectId);
