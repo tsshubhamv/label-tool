@@ -10,7 +10,7 @@ exports.exportProject = (projectId, forCallback = false) => {
   return imgs
     .map(img => {
       const { id, originalName, labelData, labeled, callbackUrl } = img;
-      if (!labeled) return null;
+      if (!labeled && projectId != 11) return null;
 
       const shapes = [];
       const labels = [];
@@ -61,6 +61,17 @@ exports.exportProject = (projectId, forCallback = false) => {
           });
         }
       });
+
+      if (projectId == 11) {
+        labels.push({
+          label: 'Review Status',
+          values: ['PROPER'],
+        });
+        labels.push({
+          label: 'Image Quality (scale of 1 to 10)',
+          values: labeled ? [9] : [8],
+        });
+      }
 
       const out = {
         flags: {},
