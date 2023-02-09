@@ -96,6 +96,8 @@ exports.exportProject = (projectId, forCallback = false) => {
         fillColor: [255, 0, 0, 128],
         imagePath: originalName,
         imageData: null,
+        imageWidth: labelData.width,
+        imageHeight: labelData.height,
       };
 
       if (forCallback) {
