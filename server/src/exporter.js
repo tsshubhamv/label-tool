@@ -3,9 +3,17 @@ const projects = require('./queries/projects');
 
 const path = require('path');
 
+//todo find a better way
+const projectIdOptionsMapping = {
+  '7': {
+    roundShapes: false,
+  },
+};
+
 exports.exportProject = (projectId, forCallback = false) => {
   const imgs = images.getForProject(projectId);
   const project = projects.get(projectId);
+  const projectOptions = projectIdOptionsMapping[projectId] || {};
 
   return imgs
     .map(img => {
@@ -31,6 +39,13 @@ exports.exportProject = (projectId, forCallback = false) => {
             return [[x1, y1], [x1, y2], [x2, y2], [x2, y1]];
           }
           function sanitize([x, y]) {
+            if (projectOptions.roundShapes === false) {
+              x = Math.max(x, 0);
+              x = Math.min(x, labelData.width);
+              y = Math.max(y, 0);
+              y = Math.min(y, labelData.height);
+              return [x, y];
+            }
             x = Math.floor(Math.max(x, 0));
             x = Math.min(x, labelData.width);
             y = Math.floor(Math.max(y, 0));
