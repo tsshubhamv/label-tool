@@ -114,6 +114,7 @@ app.post('/api/upload/s3-images', async (req, res) => {
       images.addImageUrlFromS3(projectId, urlsObj);
     } catch (e) {
       res.status(400);
+      console.log(e);
       res.json({
         message: e.message,
         code: 400,
