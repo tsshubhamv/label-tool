@@ -66,7 +66,7 @@ values (?, 'stub', ?, 0, '{ }', ?);
         url,
         projectId,
         callbackUrl,
-        addInfo
+        JSON.stringify(addInfo)
       );
       Images.updateLink(lastInsertRowid, { projectId, filename: name });
     }
