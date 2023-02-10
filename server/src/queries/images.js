@@ -54,19 +54,19 @@ values (?, 'stub', ?, 0, '{ }', ?);
     // /ml-smile-correction-data/before/3yyp1XGkk8pdaZ3uz8M4Ux.png
 
     const stmt = db.prepare(`
-      insert into images(originalName, link, externalLink, labeled, labelData, projectsId, callbackUrl)
-      values (?, 'stub', ?, 0, '{ }', ?, ?);
+      insert into images(originalName, link, externalLink, labeled, labelData, projectsId, callbackUrl, addInfo)
+      values (?, 'stub', ?, 0, '{ }', ?, ?, ?);
       `);
 
     for (const curObj of urlsObj) {
-      const { url, callbackUrl = null, addInfo = null } = curObj;
+      const { url, callbackUrl = null, addInfo = {} } = curObj;
       const name = getName(url);
       const { lastInsertRowid } = stmt.run(
         name,
         url,
         projectId,
-        callbackUrl
-        // addInfo
+        callbackUrl,
+        addInfo
       );
       Images.updateLink(lastInsertRowid, { projectId, filename: name });
     }
