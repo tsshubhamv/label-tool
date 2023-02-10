@@ -55,7 +55,7 @@ values (?, 'stub', ?, 0, '{ }', ?);
 
     const stmt = db.prepare(`
       insert into images(originalName, link, externalLink, labeled, labelData, projectsId, callbackUrl, addInfo)
-      values (?, 'stub', ?, 0, '{ }', ?, ?, ?);
+      values (?, 'stub', ?, 0, '{ }', ?, ?);
       `);
 
     for (const curObj of urlsObj) {
@@ -65,8 +65,8 @@ values (?, 'stub', ?, 0, '{ }', ?);
         name,
         url,
         projectId,
-        callbackUrl,
-        addInfo
+        callbackUrl
+        // addInfo
       );
       Images.updateLink(lastInsertRowid, { projectId, filename: name });
     }
