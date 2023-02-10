@@ -54,7 +54,7 @@ values (?, 'stub', ?, 0, '{ }', ?);
     // /ml-smile-correction-data/before/3yyp1XGkk8pdaZ3uz8M4Ux.png
 
     const stmt = db.prepare(`
-      insert into images(originalName, link, externalLink, labeled, labelData, projectsId, callbackUrl, addInfo)
+      insert into images(originalName, link, externalLink, labeled, labelData, projectsId, callbackUrl)
       values (?, 'stub', ?, 0, '{ }', ?, ?);
       `);
 
