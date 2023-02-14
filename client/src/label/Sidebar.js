@@ -67,7 +67,7 @@ export default class Sidebar extends PureComponent {
               shortcut: shortcuts[i],
               label,
               color: colors[i],
-              onSelect: getSelectHandler(label),
+              onSelect: ()=>{getSelectHandler(label);onSubmit()},
               selected: selected === label.id,
               disabled: filter ? !filter(label) : false,
               onToggle: onToggle,
@@ -202,11 +202,7 @@ function ListItem({
 
       const items = options.map(option => (
         <List.Item key={option}>
-          <Checkbox
-            label={option}
-            checked={labelData.indexOf(option) !== -1}
-            onChange={handleChange(option)}
-          />
+          <Button onClick={()=>{onFormChange(label.id, [option])}}>{option}</Button>
         </List.Item>
       ));
       return <List style={sublistStyle}>{items}</List>;
