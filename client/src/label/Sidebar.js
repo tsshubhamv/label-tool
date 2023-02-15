@@ -62,7 +62,7 @@ export default class Sidebar extends PureComponent {
         },
         body: JSON.stringify({ labelData }),
       });
-      document.getElementById('submit-move-to-next').click();
+      onSubmit();
     };
 
     const getSelectHandler = ({ type, id }) =>
