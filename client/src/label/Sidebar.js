@@ -121,7 +121,7 @@ export default class Sidebar extends PureComponent {
           <Button secondary onClick={onSkip}>
             Skip
           </Button>
-          {window.location.href.split('/')[4] != 1 ? (
+          {window.location.href.split('/')[4] != 10 ? (
             <Button primary onClick={onSubmit} id="submit-move-to-next">
               Submit
             </Button>
@@ -253,7 +253,7 @@ function ListItem({
       const { options } = label;
       const items = options.map(option => (
         <List.Item key={option}>
-          {window.location.href.split('/')[4] == 1 ? (
+          {window.location.href.split('/')[4] == 10 ? (
             <Button
               onClick={() => {
                 onFormChange(label.id, [option]);
