@@ -148,7 +148,7 @@ export default class LabelingLoader extends Component {
           fetch={this.fetch.bind(this)}
           image={image}
           demo={project.id === 'demo'}
-          showCustomOptions={[8, 9, 10].includes(project.id)}
+          showCustomOptions={[8, 9].includes(project.id)}
           {...props}
         />
       </DocumentMeta>
